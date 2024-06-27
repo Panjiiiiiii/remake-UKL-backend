@@ -1,11 +1,16 @@
-import { log } from "console";
-import  express  from "express";
-import { PORT } from "../secret";
+import  express,{Express}  from "express";
+import { PORT } from "./secret";
+import {PrismaClient} from '@prisma/client'
+import rootRouter from "./routes/router";
 
-const app = express()
+const app:Express = express()
 
-app.get('/', (req,res) => {
-    res.send('App working')
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+app.use('/api', rootRouter)
+
+export const prismaClient = new PrismaClient({
+    log:[`query`]
 })
 
 app.listen(PORT, () => {

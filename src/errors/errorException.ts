@@ -14,10 +14,10 @@ export class HttpException extends Error {
 }
 
 export enum ErrorCode {
-    NOT_FOUND = 1000,
+    USER_NOT_FOUND = 1000,
     INTERNAL_ERROR = 1001,
     UNAUTHORIZED = 1002,
     UNPROCESSABLE_ENTITY = 1003,
-    BAD_REQUEST = 1004,
-    CONFLICT = 1005
+    USER_ALREADY_EXISTS = 1004,
+    INCORRECT_PASSWORD = 1005
 }

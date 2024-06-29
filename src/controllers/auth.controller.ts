@@ -7,7 +7,6 @@ import { ErrorCode } from "../errors/errorException";
 import { LoginSchema, SignUpSchema} from "../schema/auth.schema";
 import { BadRequestException } from "../errors/bad-request";
 import { NotFoundException } from "../errors/not-found";
-import { UnauthorizedException } from "../errors/unauthorized";
 
 export const SignUp = async (req: Request,res: Response,next: NextFunction) => {
   SignUpSchema.parse(req.body);
@@ -60,20 +59,5 @@ export const Login = async (req: Request, res: Response) => {
 };
 
 export const me = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    const payload = jwt.verify(token, JWT_SECRET) as any;
-    const user = await prismaClient.user.findFirst({
-      where: { id: payload.userId },
-    });
-    if (!user) {
-      next(new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED));
-    }
-    return res.json({
-      data: user,
-    });
-  } else {
-    next(new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED));
-  }
+  res.json(req.user)
 };

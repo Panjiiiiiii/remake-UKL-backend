@@ -3,6 +3,14 @@ import { PORT } from "./secret";
 import {PrismaClient} from '@prisma/client'
 import rootRouter from "./routes/router";
 import { errorMiddleware } from "./middlewares/errors";
+import { User } from "@prisma/client";
+
+
+declare module 'Express' {
+    export interface Request {
+      user? : User
+    }
+}
 
 const app:Express = express()
 

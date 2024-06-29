@@ -1,8 +1,7 @@
-import { User } from "@prisma/client";
-import {express,Request}  from "express";
-
-declare module 'express' {
-    export interface Request extends Request {
-        user: User
-    }
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: Role;
 }

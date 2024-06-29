@@ -6,17 +6,23 @@ import { JWT_SECRET } from "../secret";
 import { prismaClient } from "..";
 
 export const authorization = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    const payload = jwt.verify(token, JWT_SECRET) as any;
+  const token = req.headers.authorization!;
+  if (!token) {
+    next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
+  }
+  try {
+    const payload = jwt.verify(token, JWT_SECRET) as any
     const user = await prismaClient.user.findFirst({
-      where: { id: payload.userId },
-    });
-    if (!user) {
-      next(new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED));
+      where: 
+      {id: payload.userId}
+    })  
+    if(!user){
+      next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
     }
-  } else {
-    next(new UnauthorizedException("Unauthorized", ErrorCode.UNAUTHORIZED));
+    req.user = user?.id? user : undefined
+    console.log(req.user);
+    
+  } catch (error) {
+    next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
   }
 };

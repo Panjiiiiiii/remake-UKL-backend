@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response} from "express";
 import { prismaClient } from "..";
 
-export const getAllCustomer = async(req:Request, res:Response, next:NextFunction) => {
+export const getAllCustomer = async(req:Request, res:Response) => {
     const user = await prismaClient.user.findMany({
         where : {
             role : 'CUSTOMER'

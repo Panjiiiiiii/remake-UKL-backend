@@ -5,7 +5,6 @@ import rootRouter from "./routes/router";
 import { errorMiddleware } from "./middlewares/errors";
 import { User } from "@prisma/client";
 
-
 declare module 'Express' {
     export interface Request {
       user? : User

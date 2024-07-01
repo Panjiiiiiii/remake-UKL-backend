@@ -18,10 +18,7 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
     })  
     if(!user){
       next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
-    }
-    req.user = user?.id? user : undefined
-    console.log(req.user);
-    
+    }    
   } catch (error) {
     next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
   }

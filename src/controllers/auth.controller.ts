@@ -57,7 +57,3 @@ export const Login = async (req: Request, res: Response) => {
     message: "Sign up sucsess",
   });
 };
-
-export const me = async (req: Request, res: Response, next: NextFunction) => {
-  res.json(req.user)
-};

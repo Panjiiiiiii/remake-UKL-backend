@@ -19,11 +19,12 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
           id : payload.userId
         }
       })
-      console.log(user)
       if(!user) {
         next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
       }
+      res.locals.user = user
       next()
+      return res.locals.user = user
     } else {
       next(new UnauthorizedException('User unauthorized', ErrorCode.UNAUTHORIZED))
     }

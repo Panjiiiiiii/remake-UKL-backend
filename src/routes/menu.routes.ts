@@ -6,7 +6,7 @@ import { errorHandler } from "../error-handler";
 
 const menuRoutes:Router = Router()
 
-menuRoutes.post('/', [authorization, adminMiddleware], errorHandler(createMenu))
+menuRoutes.post('/', createMenu)
 menuRoutes.get('/', errorHandler(getAllMenu))
 
 export default menuRoutes

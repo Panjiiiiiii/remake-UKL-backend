@@ -3,11 +3,14 @@ import { PORT } from "./secret";
 import {PrismaClient} from '@prisma/client'
 import rootRouter from "./routes/router";
 import { errorMiddleware } from "./middlewares/errors";
+import bodyParser from "body-parser";
+import cors from 'cors'
 
 const app:Express = express()
 
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+app.use(cors())
 app.use('/api', rootRouter)
 
 export const prismaClient = new PrismaClient({

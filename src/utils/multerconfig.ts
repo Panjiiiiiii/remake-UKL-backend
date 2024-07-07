@@ -2,10 +2,11 @@ import multer from "multer";
 import { diskStorage } from "multer";
 import { BadRequestException } from "../errors/bad-request";
 import { ErrorCode } from "../errors/errorException";
+import { Request } from "express";
 
 const storage = diskStorage({
     destination : './src/assets',
-    filename : (req,file,cb) => {
+    filename : (req:Request,file,cb) => {
         const filename = `${Date.now()}-${file.originalname}`
         cb(null, filename)
     }
@@ -13,7 +14,7 @@ const storage = diskStorage({
 
 export const upload = multer({
     storage : storage,
-    fileFilter : (req,file,cb) => {
+    fileFilter : (req:Request,file,cb) => {
         const acceptedType = [`image/jpg`, `image/jpeg`, `image/png`]
         if(!acceptedType.includes(file.mimetype)) {
             cb(null,false)
